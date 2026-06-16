@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabeel MBBS Curriculum — Interactive App</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --navy: #1F3864;
+    --blue: #2E75B6;
+    --lblue: #D6E4F0;
+    --phase1: #D6E4F0;
+    --phase2: #D5E8D4;
+    --phase3: #FFE6CC;
+    --phase1h: #2E75B6;
+    --phase2h: #1E5631;
+    --phase3h: #C55A11;
+  }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fb; }
+  .nav-tab { transition: all 0.2s; border-bottom: 3px solid transparent; }
+  .nav-tab.active { border-bottom-color: #2E75B6; color: #1F3864; font-weight: 700; }
+  .nav-tab:not(.active):hover { border-bottom-color: #AED6F1; color: #2E75B6; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .phase-I { background: var(--phase1); }
+  .phase-II { background: var(--phase2); }
+  .phase-III { background: var(--phase3); }
+  .badge { font-size: 0.68rem; padding: 2px 7px; border-radius: 9999px; font-weight: 600; }
+  .badge-ger { background: #1F3864; color: #fff; }
+  .badge-module { background: #2E75B6; color: #fff; }
+  .badge-clerkship { background: #7D3C98; color: #fff; }
+  .badge-research { background: #1E5631; color: #fff; }
+  .badge-ece { background: #C55A11; color: #fff; }
+  .badge-skills { background: #117A8B; color: #fff; }
+  .badge-medical { background: #5D6D7E; color: #fff; }
+  .ch-input { width: 56px; text-align: center; border: 1px solid #AED6F1;
+    border-radius: 6px; padding: 2px 4px; font-size: 0.85rem; background: #fff; }
+  .ch-input:focus { outline: 2px solid #2E75B6; }
+  .warn { color: #C0392B; font-weight: 700; }
+  .ok { color: #1E5631; font-weight: 700; }
+  .sem-header { cursor: pointer; user-select: none; }
+  .sem-header:hover { filter: brightness(0.93); }
+  .thread-bar { border-radius: 4px; height: 28px; display: flex; align-items: center;
+    padding: 0 8px; font-size: 0.75rem; font-weight: 600; color: #fff;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .thread-empty { border-radius: 4px; height: 28px; background: #f0f0f0; }
+  .sem-col { min-width: 72px; }
+  input[type=search]::-webkit-search-cancel-button { cursor: pointer; }
+  .detail-panel { display: none; }
+  .detail-panel.open { display: table-row; }
+  tr.course-row:hover td { background: #EBF5FB !important; cursor: pointer; }
+  .sort-btn { cursor: pointer; user-select: none; }
+  @media (max-width: 640px) {
+    .hide-mobile { display: none; }
+    .ch-input { width: 44px; }
+    .sem-col { min-width: 52px; }
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- HEADER -->
+<header style="background:var(--navy)" class="text-white px-4 py-3 shadow-lg">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3">
+        <img src="Sabeel_Logo.svg" alt="Sabeel logo" class="h-20 w-auto max-w-[140px] rounded-md bg-white/10 p-2" />
+        <div>
+          <div class="font-bold text-lg leading-tight">Sabeel College of Medicine</div>
+          <div class="text-xs opacity-75">MBBS Curriculum · 216 Credit Hours · 5 Years · 10 Semesters · WFME & CanMEDS Aligned</div>
+        </div>
+      </div>
+      <div class="ml-auto text-right">
+        <div class="text-2xl font-bold" id="grand-total-hdr">216</div>
+        <div class="text-xs opacity-75">Total CH</div>
+      </div>
+    </div>
+    <!-- TABS -->
+    <nav class="flex gap-1 mt-3 border-t border-blue-700 pt-1">
+      <button onclick="showPage('calc')" class="nav-tab active px-3 py-1.5 text-sm" id="tab-calc">⚖️ CH Calculator</button>
+      <button onclick="showPage('overview')" class="nav-tab px-3 py-1.5 text-sm" id="tab-overview">📋 Curriculum</button>
+      <button onclick="showPage('threads')" class="nav-tab px-3 py-1.5 text-sm" id="tab-threads">🧵 Threads</button>
+      <button onclick="showPage('index')" class="nav-tab px-3 py-1.5 text-sm" id="tab-index">🔍 Course Index</button>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-2 sm:px-4 py-4">
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 1 — CREDIT HOUR CALCULATOR
+════════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-calc">
+  <div class="grid grid-cols-3 gap-3 mb-4">
+    <div class="rounded-xl p-3 text-center shadow" style="background:var(--phase1)">
+      <div class="text-xs font-semibold text-blue-900">Phase I (Sems 1–4)</div>
+      <div class="text-2xl font-bold text-blue-900" id="phase1-total">86</div>
+      <div class="text-xs text-blue-700">Target: 86 CH</div>
+    </div>
+    <div class="rounded-xl p-3 text-center shadow" style="background:var(--phase2)">
+      <div class="text-xs font-semibold text-green-900">Phase II (Sems 5–8)</div>
+      <div class="text-2xl font-bold text-green-900" id="phase2-total">88</div>
+      <div class="text-xs text-green-700">Target: 88 CH</div>
+    </div>
+    <div class="rounded-xl p-3 text-center shadow" style="background:var(--phase3)">
+      <div class="text-xs font-semibold text-orange-900">Phase III (Sems 9–10)</div>
+      <div class="text-2xl font-bold text-orange-900" id="phase3-total">42</div>
+      <div class="text-xs text-orange-700">Target: 42 CH</div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow p-3 mb-3 flex flex-wrap gap-3 items-center">
+    <div class="text-sm font-semibold text-gray-600">Programme Total:</div>
+    <div class="text-2xl font-bold" id="grand-total-calc" style="color:var(--navy)">216</div>
+    <div class="text-sm" id="grand-status" class="ok">✅ On target (216 CH)</div>
+    <button onclick="calcExpandAll()" class="ml-auto text-xs px-3 py-1.5 rounded-lg text-white font-semibold" style="background:var(--blue)">↕ Expand All</button>
+    <button onclick="calcCollapseAll()" class="text-xs px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 font-semibold">↕ Collapse All</button>
+    <button onclick="resetCH()" class="text-xs px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 font-semibold">↩ Reset</button>
+  </div>
+
+  <div id="calc-semesters"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 2 — CURRICULUM OVERVIEW
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-overview">
+  <div class="bg-white rounded-xl shadow p-3 mb-3 flex flex-wrap gap-2 items-center text-xs">
+    <span class="badge badge-ger">GER</span> General Education Req. &nbsp;
+    <span class="badge badge-module">System Module</span>&nbsp;
+    <span class="badge badge-clerkship">Clerkship</span>&nbsp;
+    <span class="badge badge-research">Research</span>&nbsp;
+    <span class="badge badge-ece">ECE</span>&nbsp;
+    <span class="badge badge-skills">Clinical Skills</span>&nbsp;
+    <span class="badge badge-medical">Medical</span>
+    <button onclick="expandAll()" class="ml-auto text-xs px-2 py-1 rounded border border-gray-300">Expand All</button>
+    <button onclick="collapseAll()" class="text-xs px-2 py-1 rounded border border-gray-300">Collapse All</button>
+  </div>
+  <div id="overview-semesters"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 3 — PROGRAMME THREADS
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-threads">
+  <div class="bg-white rounded-xl shadow p-4 mb-4">
+    <h2 class="font-bold text-lg mb-1" style="color:var(--navy)">Programme Threads</h2>
+    <p class="text-xs text-gray-500 mb-3">Vertical integration across all 10 semesters — how each thread spirals in depth and complexity.</p>
+    <div id="threads-grid" class="overflow-x-auto"></div>
+  </div>
+  <div id="thread-details"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE 4 — COURSE INDEX
+════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-index">
+  <div class="bg-white rounded-xl shadow p-3 mb-3 flex flex-wrap gap-2 items-center">
+    <input type="search" id="search-input" placeholder="Search courses…" oninput="filterIndex()"
+      class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm w-48 focus:outline-none focus:ring-2" style="--tw-ring-color:#2E75B6">
+    <select id="filter-phase" onchange="filterIndex()" class="border border-gray-300 rounded-lg px-2 py-1.5 text-sm">
+      <option value="">All Phases</option>
+      <option value="I">Phase I</option>
+      <option value="II">Phase II</option>
+      <option value="III">Phase III</option>
+    </select>
+    <select id="filter-sem" onchange="filterIndex()" class="border border-gray-300 rounded-lg px-2 py-1.5 text-sm">
+      <option value="">All Sems</option>
+      <option value="1">Sem 1</option><option value="2">Sem 2</option>
+      <option value="3">Sem 3</option><option value="4">Sem 4</option>
+      <option value="5">Sem 5</option><option value="6">Sem 6</option>
+      <option value="7">Sem 7</option><option value="8">Sem 8</option>
+      <option value="9">Sem 9</option><option value="10">Sem 10</option>
+    </select>
+    <select id="filter-type" onchange="filterIndex()" class="border border-gray-300 rounded-lg px-2 py-1.5 text-sm">
+      <option value="">All Types</option>
+      <option value="GER">General Education Req.</option>
+      <option value="Medical">Medical</option>
+      <option value="System Module">System Module</option>
+      <option value="Clerkship">Clerkship</option>
+      <option value="Research">Research</option>
+      <option value="ECE">ECE</option>
+      <option value="Clinical Skills">Clinical Skills</option>
+    </select>
+    <span id="index-count" class="text-xs text-gray-500 ml-auto"></span>
+  </div>
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-sm" id="index-table">
+      <thead>
+        <tr style="background:var(--navy); color:#fff">
+          <th class="px-3 py-2 text-left sort-btn" onclick="sortIndex('code')">Code ↕</th>
+          <th class="px-3 py-2 text-left">Course Title</th>
+          <th class="px-2 py-2 text-center hide-mobile sort-btn" onclick="sortIndex('sem')">Sem ↕</th>
+          <th class="px-2 py-2 text-center hide-mobile">Phase</th>
+          <th class="px-2 py-2 text-center sort-btn" onclick="sortIndex('ch')">CH ↕</th>
+          <th class="px-2 py-2 text-center">Type</th>
+        </tr>
+      </thead>
+      <tbody id="index-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<footer class="text-center text-xs text-gray-400 py-4 mt-6 border-t border-gray-200">
+  Sabeel College of Medicine, Shendi &nbsp;·&nbsp; WFME 2020 &amp; CanMEDS Framework Aligned
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════════════════
+const COURSES = [
+  // SEM 1
+  {code:"GER-01",name:"Scientific Language & Medical Terminology",sem:1,year:1,phase:"I",ch:3,chDisplay:"3 (3+0)",type:"GER",threads:["language"],anchor:"EPA 5 & 6"},
+  {code:"GER-02",name:"Health Informatics, AI & Digital Medicine",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"GER",threads:["informatics"],anchor:"T2·EBS4, T7·HS7"},
+  {code:"GER-03",name:"Islamic Studies",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"GER",threads:["professionalism"],anchor:"T6·P1, T9·SA7"},
+  {code:"SMED-I1A-01",name:"Introduction to Medicine & Professional Identity",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P13, T8·SPE1"},
+  {code:"SMED-I1A-02",name:"Cell Biology, Genetics & Molecular Biology",sem:1,year:1,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I1A-03",name:"Medical Biophysics & Biomedical Sciences Foundations",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I1A-04",name:"Biochemistry I: Biomolecules & Enzymology",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I1A-05",name:"General Histology",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I1A-06",name:"General Embryology",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  // SEM 2
+  {code:"GER-04",name:"Medical Communication & Academic Writing",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (3+0)",type:"GER",threads:["language"],anchor:"T4·C6, EPA 5 & 6"},
+  {code:"GER-05",name:"Sudan Health System & Healthcare Policy",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"GER",threads:["community","informatics"],anchor:"T7·HS1/9, T9·SA1"},
+  {code:"GER-06",name:"Sudanese History, Culture & Heritage",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"GER",threads:["professionalism"],anchor:"T6·P1, T9·SA7"},
+  {code:"SMED-I1B-01",name:"Human Anatomy I: Trunk, Thorax, Abdomen & Pelvis",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (1+4)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I1B-02",name:"Medical Physiology I: General Physiology & Homeostasis",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I1B-03",name:"Biochemistry II: Metabolism & Nutrition",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I1B-04",name:"Foundations of Medical Ethics & Professionalism",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6, EPA 11"},
+  {code:"SMED-I1B-05",name:"Community Medicine I: Social Determinants of Health & PHC",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA1, T7·HS9, EPA 14"},
+  {code:"SMED-I1B-06",name:"Early Clinical Exposure II (ECE-II)",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (0+4)",type:"ECE",threads:["ece"],anchor:"T3·PC2, EPA 1"},
+  {code:"SMED-I1B-07",name:"Foundational Clinical Skills (vital signs, basic examination, hand hygiene)",sem:2,year:1,phase:"I",ch:1,chDisplay:"1 (0+2)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC2, EPA 1"},
+  // SEM 3
+  {code:"SMED-I2A-01",name:"Cardiovascular System Module (integrated)",sem:3,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2 & 3"},
+  {code:"SMED-I2A-02",name:"Respiratory System Module (integrated)",sem:3,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
+  {code:"SMED-I2A-03",name:"Haematology & Blood Module",sem:3,year:2,phase:"I",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3"},
+  {code:"SMED-I2A-05",name:"Behavioural & Social Sciences in Medicine",sem:3,year:2,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"Medical",threads:["professionalism"],anchor:"T1·ME5, T4·C8, T9·SA1"},
+  {code:"SMED-I2A-07",name:"Anatomy of the Limbs (upper & lower limb, brachial & lumbar plexuses, surface anatomy)",sem:3,year:2,phase:"I",ch:3,chDisplay:"3 (1+4)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I2A-08",name:"Head & Neck Anatomy (skull, neck spaces, thyroid, cranial nerves III–XII)",sem:3,year:2,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  // SEM 4
+  {code:"SMED-I2B-01",name:"Gastrointestinal & Hepatobiliary System Module (integrated)",sem:4,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
+  {code:"SMED-I2B-02",name:"Renal & Urinary System Module (integrated)",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3"},
+  {code:"SMED-I2B-03",name:"Nervous System Module I (integrated)",sem:4,year:2,phase:"I",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
+  {code:"SMED-I2B-04",name:"Endocrinology Module (integrated)",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3"},
+  {code:"SMED-I2B-05",name:"General Pathology",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3"},
+  {code:"SMED-I2B-06",name:"Epidemiology & Medical Statistics",sem:4,year:2,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Research",threads:["research"],anchor:"T2·EBS5, T1·ME4, T9·SA2"},
+  {code:"SMED-I2B-07",name:"Early Clinical Exposure IV: Community Health Visit",sem:4,year:2,phase:"I",ch:1,chDisplay:"1 (0+2)",type:"ECE",threads:["ece","community"],anchor:"T9·SA5, T7·HS1, EPA 9"},
+  {code:"SMED-I2B-08",name:"Research Methods & Biostatistics I",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Research",threads:["research"],anchor:"T2·EBS3/8, EPA 7"},
+  // SEM 5
+  {code:"SMED-II3A-01",name:"Musculoskeletal Medicine & Rheumatology",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
+  {code:"SMED-II3A-02",name:"Dermatology & Integumentary System Module",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, EPA 2"},
+  {code:"SMED-II3A-03",name:"Microbiology & Infectious Disease I: Bacteriology & Mycology",sem:5,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC6"},
+  {code:"SMED-II3A-04",name:"Immunology",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC9"},
+  {code:"SMED-II3A-05",name:"Systemic Pathology I",sem:5,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 2 & 3"},
+  {code:"SMED-II3A-06",name:"Basic Clinical Skills I: History-Taking & Physical Examination",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC2, T4·C2, EPA 1 & 2"},
+  // SEM 6
+  {code:"SMED-II3B-01",name:"Reproductive & Women's Health Module (integrated)",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC6"},
+  {code:"SMED-II3B-02",name:"Paediatrics & Child Health Module (integrated)",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC7"},
+  {code:"SMED-II3B-03",name:"Microbiology II: Virology, Parasitology & Tropical Diseases",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T9·SA10"},
+  {code:"SMED-II3B-04",name:"Systemic Pathology II",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 3"},
+  {code:"SMED-II3B-05",name:"Pharmacology & Therapeutics I",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["pharmacology"],anchor:"T1·ME3, T3·PC5/6, EPA 4"},
+  {code:"SMED-II3B-06",name:"Basic Clinical Skills II: Procedures & Patient Communication",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T4·C7, T3·PC7, EPA 8 & 12"},
+  {code:"SMED-II3B-07",name:"Community Medicine II: Health Promotion, Disease Prevention & Environmental Health",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA1/3, T7·HS9, EPA 14"},
+  // SEM 7
+  {code:"SMED-II4A-01",name:"Ophthalmology & ENT Module",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC1"},
+  {code:"SMED-II4A-02",name:"Psychiatry & Mental Health",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3/5, T3·PC6"},
+  {code:"SMED-II4A-03",name:"Radiology & Diagnostic Imaging",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["clinical-skills"],anchor:"T3·PC4, EPA 3"},
+  {code:"SMED-II4A-04",name:"Forensic Medicine & Toxicology",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6, T7·HS3"},
+  {code:"SMED-II4A-05",name:"Research Methodology & Evidence-Based Medicine",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Research",threads:["research"],anchor:"T2·EBS3/8, EPA 7"},
+  {code:"SMED-II4A-06",name:"Professionalism, Advanced Ethics & Good Medical Practice",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6/8, T8·SPE8, EPA 11"},
+  {code:"SMED-II4A-07",name:"Pharmacology & Therapeutics II",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["pharmacology"],anchor:"T3·PC5/6, EPA 4"},
+  {code:"SMED-II4A-08",name:"Rural & Community Medicine Clerkship",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clerkship",threads:["community","clinical-skills"],anchor:"T9·SA5/9, T7·HS1, EPA 9 & 14"},
+  // SEM 8
+  {code:"SMED-II4B-01",name:"Internal Medicine Clerkship I",sem:8,year:4,phase:"II",ch:4,chDisplay:"4 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
+  {code:"SMED-II4B-02",name:"General Surgery Clerkship I",sem:8,year:4,phase:"II",ch:4,chDisplay:"4 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 1 & 12"},
+  {code:"SMED-II4B-03",name:"Obstetrics & Gynaecology Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6/7, EPA 4"},
+  {code:"SMED-II4B-04",name:"Paediatrics Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC7/11, EPA 4"},
+  {code:"SMED-II4B-05",name:"Emergency Medicine & Acute Care",sem:8,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["clinical-skills"],anchor:"T3·PC3, EPA 10"},
+  {code:"SMED-II4B-06",name:"Family Medicine & Community Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T7·HS1/9, T9·SA6, EPA 14"},
+  {code:"SMED-II4B-07",name:"Research Project I",sem:8,year:4,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, EPA 7"},
+  // SEM 9
+  {code:"SMED-III5A-01",name:"Internal Medicine Clerkship II",sem:9,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
+  {code:"SMED-III5A-02",name:"General Surgery Clerkship II",sem:9,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 12"},
+  {code:"SMED-III5A-03",name:"Obstetrics & Gynaecology Clerkship II",sem:9,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6, EPA 4 & 11"},
+  {code:"SMED-III5A-04",name:"Paediatrics Clerkship II",sem:9,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC9/11, EPA 14"},
+  {code:"SMED-III5A-05",name:"Elective Clerkship I (student-selected specialty)",sem:9,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Clerkship",threads:["clerkship"],anchor:"T8·SPE9/10"},
+  // SEM 10
+  {code:"SMED-III5B-01",name:"Internal Medicine Clerkship III",sem:10,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
+  {code:"SMED-III5B-02",name:"General Surgery Clerkship III",sem:10,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 12"},
+  {code:"SMED-III5B-03",name:"Obstetrics & Gynaecology Clerkship III",sem:10,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6, EPA 4 & 11"},
+  {code:"SMED-III5B-04",name:"Paediatrics Clerkship III",sem:10,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC9/11, EPA 14"},
+  {code:"SMED-III5B-05",name:"Family & Community Medicine Clerkship II",sem:10,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T9·SA5/9, T7·HS1, EPA 13 & 14"},
+  {code:"SMED-III5B-06",name:"Research Project II & Portfolio Completion",sem:10,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, T8·SPE9"},
+];
+
+const SEM_TARGETS = {1:18,2:23,3:21,4:24,5:23,6:23,7:21,8:21,9:20,10:22};
+const SEM_NOTES = {
+  4:"▶ Progress Test I (end of Phase I)",
+  7:"★ Research Supervision I — mandatory non-credit milestone",
+  8:"▶ Progress Test II (end of Phase II) · ★ Research Supervision II — mandatory non-credit milestone",
+  9:"★ Research Supervision III — mandatory non-credit milestone",
+  10:"▶ Progress Test III / Exit Comprehensive Examination"
+};
+
+const THREADS = [
+  {id:"basic-science",  label:"Biomedical Sciences",  color:"#2E75B6", desc:"Foundational sciences: anatomy, physiology, biochemistry, histology, embryology, pathology, microbiology, immunology."},
+  {id:"systems",        label:"System Modules",        color:"#117A8B", desc:"Organ-system integrated modules combining anatomy, physiology, and pathophysiology — the spine of Phase I & II."},
+  {id:"ece",            label:"Early Clinical Exposure",color:"#C55A11", desc:"Structured ECE placements that bridge biomedical sciences with real patient contact from Year 1."},
+  {id:"clinical-skills",label:"Clinical Skills & Procedures",color:"#7D3C98",desc:"History-taking, physical examination, clinical procedures, diagnostic imaging, and emergency care."},
+  {id:"clerkship",      label:"Clinical Clerkships",   color:"#6C3483", desc:"Full hospital/clinic rotations in medicine, surgery, O&G, paediatrics, family medicine, and electives."},
+  {id:"community",      label:"Community & Public Health",color:"#1E5631",desc:"PHC, social determinants, rural medicine, community clerkships — with a Sudan/African health context."},
+  {id:"research",       label:"Research & EBM",        color:"#117864", desc:"Research methods, biostatistics, epidemiology, EBM, and Research Projects I & II."},
+  {id:"pharmacology",   label:"Pharmacology Thread",   color:"#784212", desc:"Pharmacology & Therapeutics I and II covering major drug classes across organ systems."},
+  {id:"professionalism",label:"Professionalism & Ethics",color:"#5D6D7E",desc:"Ethics, communication, Islamic studies, professional identity — woven across all years."},
+  {id:"language",       label:"Language & Communication",color:"#2980B9",desc:"Scientific language, medical terminology, academic writing — building communication competency."},
+  {id:"informatics",    label:"Health Informatics & AI",color:"#1A5276",desc:"Digital medicine, AI in healthcare, health informatics — preparing students for the modern clinical environment."},
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+let editableCH = {};
+COURSES.forEach(c => { editableCH[c.code] = c.ch; });
+
+let indexSort = { key: 'sem', dir: 1 };
+let expandedSems = {};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════════════
+function typeBadge(type) {
+  const map = {
+    "GER":"badge-ger","System Module":"badge-module","Clerkship":"badge-clerkship",
+    "Research":"badge-research","ECE":"badge-ece","Clinical Skills":"badge-skills","Medical":"badge-medical"
+  };
+  return `<span class="badge ${map[type]||'badge-medical'}">${type}</span>`;
+}
+function phaseColor(phase) {
+  return {I:"#2E75B6",II:"#1E5631",III:"#C55A11"}[phase]||"#333";
+}
+function phaseBg(phase) {
+  return {I:"var(--phase1)",II:"var(--phase2)",III:"var(--phase3)"}[phase]||"#eee";
+}
+function getCourseCH(code) { return editableCH[code] || 0; }
+function getSemCourses(s) { return COURSES.filter(c=>c.sem===s); }
+function semTotal(s) { return getSemCourses(s).reduce((a,c)=>a+getCourseCH(c.code),0); }
+function phaseTotal(sems) { return sems.reduce((a,s)=>a+semTotal(s),0); }
+function grandTotal() { return COURSES.reduce((a,c)=>a+getCourseCH(c.code),0); }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PAGE NAVIGATION
+// ═══════════════════════════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PAGE 1 — CALCULATOR
+// ═══════════════════════════════════════════════════════════════════════════
+function buildCalc() {
+  const container = document.getElementById('calc-semesters');
+  container.innerHTML = '';
+  for(let s=1;s<=10;s++){
+    const courses = getSemCourses(s);
+    const phase = courses[0]?.phase||'I';
+    const div = document.createElement('div');
+    div.className = 'mb-3 rounded-xl shadow overflow-hidden';
+    div.innerHTML = `
+      <div class="px-4 py-2 flex items-center gap-2 sem-header" style="background:${phaseColor(phase)};cursor:pointer" onclick="toggleCalcSem(${s})">
+        <span class="text-white text-xs" id="calc-arrow-${s}">▾</span>
+        <span class="text-white font-bold text-sm">Semester ${s}</span>
+        <span class="text-white text-xs opacity-80">— Year ${courses[0]?.year} · Phase ${phase}</span>
+        ${SEM_NOTES[s]?`<span class="ml-2 text-xs font-bold text-yellow-200">${SEM_NOTES[s]}</span>`:''}
+        <span class="ml-auto text-white font-bold text-sm" id="calc-sem-total-${s}"></span>
+      </div>
+      <div class="overflow-x-auto" id="calc-body-wrap-${s}">
+        <table class="w-full text-sm bg-white">
+          <thead><tr class="text-xs text-gray-500 border-b">
+            <th class="px-3 py-1.5 text-left">Code</th>
+            <th class="px-3 py-1.5 text-left">Course</th>
+            <th class="px-2 py-1.5 text-center">CH</th>
+            <th class="px-2 py-1.5 text-center hide-mobile">Type</th>
+          </tr></thead>
+          <tbody id="calc-body-${s}"></tbody>
+        </table>
+      </div></div>`;
+    container.appendChild(div);
+
+    const tbody = document.getElementById(`calc-body-${s}`);
+    courses.forEach(c=>{
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-gray-100';
+      const bg = c.type==='GER'?'background:#EBF5FB;':'';
+      tr.innerHTML = `
+        <td class="px-3 py-1.5 font-mono text-xs text-blue-800 font-semibold" style="${bg}">${c.code}</td>
+        <td class="px-3 py-1.5 text-xs" style="${bg}">${c.name}</td>
+        <td class="px-2 py-1.5 text-center" style="${bg}">
+          <input type="number" class="ch-input" min="1" max="20" value="${editableCH[c.code]}"
+            data-code="${c.code}" onchange="updateCH('${c.code}',this.value)">
+        </td>
+        <td class="px-2 py-1.5 text-center hide-mobile" style="${bg}">${typeBadge(c.type)}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  updateTotals();
+}
+
+function updateCH(code, val) {
+  editableCH[code] = Math.max(1, parseInt(val)||1);
+  updateTotals();
+}
+
+function updateTotals() {
+  const gt = grandTotal();
+  document.getElementById('grand-total-hdr').textContent = gt;
+  document.getElementById('grand-total-calc').textContent = gt;
+  const status = document.getElementById('grand-status');
+  if(gt===216){ status.className='ok'; status.textContent='✅ On target (216 CH)'; }
+  else if(gt<216){ status.className='warn'; status.textContent=`⚠️ ${216-gt} CH below target`; }
+  else { status.className='warn'; status.textContent=`⚠️ ${gt-216} CH above target`; }
+
+  const p1=phaseTotal([1,2,3,4]), p2=phaseTotal([5,6,7,8]), p3=phaseTotal([9,10]);
+  document.getElementById('phase1-total').textContent=p1;
+  document.getElementById('phase2-total').textContent=p2;
+  document.getElementById('phase3-total').textContent=p3;
+
+  for(let s=1;s<=10;s++){
+    const el=document.getElementById(`calc-sem-total-${s}`);
+    if(!el)continue;
+    const t=semTotal(s), target=SEM_TARGETS[s];
+    el.textContent = `${t} CH${t!==target?' ⚠️':''}`;
+  }
+  // sync overview if visible
+  document.querySelectorAll('.ov-sem-total').forEach(el=>{
+    const s=parseInt(el.dataset.sem);
+    const t=semTotal(s), target=SEM_TARGETS[s];
+    el.textContent = `${t} CH`;
+    el.className = `ov-sem-total font-bold text-sm ${t!==target?'warn':'text-white'}`;
+  });
+}
+
+function resetCH() {
+  COURSES.forEach(c=>{ editableCH[c.code]=c.ch; });
+  buildCalc();
+  buildOverview();
+}
+
+function exportJSON() {
+  const data = COURSES.map(c=>({...c, ch:editableCH[c.code]}));
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='sabeel_curriculum_data.json'; a.click();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PAGE 2 — CURRICULUM OVERVIEW
+// ═══════════════════════════════════════════════════════════════════════════
+function buildOverview() {
+  const container = document.getElementById('overview-semesters');
+  container.innerHTML = '';
+  for(let s=1;s<=10;s++){
+    const courses = getSemCourses(s);
+    const phase = courses[0]?.phase||'I';
+    const isOpen = expandedSems[s] !== false; // default open
+
+    const div = document.createElement('div');
+    div.className = 'mb-3 rounded-xl shadow overflow-hidden';
+    div.innerHTML = `
+      <div class="sem-header px-4 py-2.5 flex items-center gap-2" style="background:${phaseColor(phase)}"
+           onclick="toggleSem(${s})">
+        <span class="text-white text-xs">▾</span>
+        <span class="text-white font-bold">Semester ${s}</span>
+        <span class="text-white text-xs opacity-80">Year ${courses[0]?.year} · Phase ${phase}</span>
+        ${SEM_NOTES[s]?`<span class="ml-1 text-xs font-bold text-yellow-200">${SEM_NOTES[s]}</span>`:''}
+        <span class="ov-sem-total font-bold text-sm text-white ml-auto" data-sem="${s}">${semTotal(s)} CH</span>
+      </div>
+      <div id="ov-body-${s}" class="${isOpen?'':'hidden'}">
+        <table class="w-full text-sm bg-white">
+          <tbody>${courses.map((c,i)=>`
+            <tr class="${i%2===0?'bg-white':'bg-gray-50'} border-b border-gray-100">
+              <td class="px-3 py-1.5 font-mono text-xs font-semibold text-blue-800 w-36">${c.code}</td>
+              <td class="px-3 py-1.5 text-xs">${c.name}</td>
+              <td class="px-3 py-1.5 text-center text-xs font-bold w-20">${c.chDisplay}</td>
+              <td class="px-2 py-1.5 text-center w-28 hide-mobile">${typeBadge(c.type)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    container.appendChild(div);
+    expandedSems[s] = isOpen;
+  }
+}
+
+function toggleSem(s) {
+  const body = document.getElementById(`ov-body-${s}`);
+  body.classList.toggle('hidden');
+  expandedSems[s] = !body.classList.contains('hidden');
+}
+function expandAll() { for(let s=1;s<=10;s++) { document.getElementById(`ov-body-${s}`)?.classList.remove('hidden'); expandedSems[s]=true; } }
+function collapseAll() { for(let s=1;s<=10;s++) { document.getElementById(`ov-body-${s}`)?.classList.add('hidden'); expandedSems[s]=false; } }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PAGE 3 — THREADS
+// ═══════════════════════════════════════════════════════════════════════════
+function buildThreads() {
+  const grid = document.getElementById('threads-grid');
+  const details = document.getElementById('thread-details');
+
+  // Build grid
+  let html = `<table class="text-xs border-collapse" style="min-width:700px">
+    <thead><tr>
+      <th class="px-2 py-1.5 text-left font-bold" style="min-width:160px;color:var(--navy)">Thread</th>`;
+  for(let s=1;s<=10;s++) html += `<th class="sem-col px-1 py-1.5 text-center text-gray-500">S${s}</th>`;
+  html += `</tr></thead><tbody>`;
+
+  THREADS.forEach(thread=>{
+    html += `<tr class="border-t border-gray-100">
+      <td class="px-2 py-1 font-semibold cursor-pointer hover:underline" style="color:${thread.color}"
+          onclick="showThreadDetail('${thread.id}')">${thread.label}</td>`;
+    for(let s=1;s<=10;s++){
+      const matches = COURSES.filter(c=>c.sem===s && c.threads.includes(thread.id));
+      if(matches.length){
+        const names = matches.map(c=>c.name.length>30?c.name.slice(0,28)+'…':c.name).join('\n');
+        html += `<td class="sem-col px-1 py-1 text-center">
+          <div class="thread-bar" style="background:${thread.color}" title="${names}">
+            ${matches.length>1?`×${matches.length}`:matches[0].code.split('-').slice(-1)[0]}</div></td>`;
+      } else {
+        html += `<td class="sem-col px-1 py-1"><div class="thread-empty"></div></td>`;
+      }
+    }
+    html += `</tr>`;
+  });
+
+  // Phase labels row
+  html += `<tr class="border-t-2 border-gray-300">
+    <td class="px-2 py-1 text-gray-400 text-xs">Phase / Year</td>`;
+  const phaseSpans = [{label:'Phase I · Year 1',cols:2,color:'var(--phase1h)'},
+    {label:'Phase I · Year 2',cols:2,color:'var(--phase1h)'},
+    {label:'Phase II · Year 3',cols:2,color:'var(--phase2h)'},
+    {label:'Phase II · Year 4',cols:2,color:'var(--phase2h)'},
+    {label:'Phase III · Year 5',cols:2,color:'var(--phase3h)'}];
+  phaseSpans.forEach(p=>{
+    html+=`<td colspan="${p.cols}" class="sem-col px-1 py-1 text-center text-white text-xs font-bold rounded" style="background:${p.color}">${p.label}</td>`;
+  });
+  html += `</tr></tbody></table>`;
+  grid.innerHTML = html;
+
+  // Detail cards
+  let dhtml = `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-2">`;
+  THREADS.forEach(thread=>{
+    const threadCourses = COURSES.filter(c=>c.threads.includes(thread.id));
+    const totalCH = threadCourses.reduce((a,c)=>a+c.ch,0);
+    const sems = [...new Set(threadCourses.map(c=>c.sem))].sort((a,b)=>a-b);
+    dhtml += `<div id="tdet-${thread.id}" class="bg-white rounded-xl shadow p-3 border-l-4" style="border-color:${thread.color}">
+      <div class="font-bold text-sm mb-1" style="color:${thread.color}">${thread.label}</div>
+      <div class="text-xs text-gray-500 mb-2">${thread.desc}</div>
+      <div class="text-xs text-gray-400 mb-1">Semesters: ${sems.join(', ')} &nbsp;·&nbsp; Total: ${totalCH} CH</div>
+      <div class="space-y-1">${threadCourses.map(c=>`
+        <div class="text-xs flex gap-1 items-start">
+          <span class="font-mono text-blue-700 shrink-0 w-28">${c.code}</span>
+          <span class="text-gray-700">${c.name}</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  });
+  dhtml += '</div>';
+  details.innerHTML = dhtml;
+}
+
+function showThreadDetail(id) {
+  document.getElementById(`tdet-${id}`)?.scrollIntoView({behavior:'smooth',block:'center'});
+  const el = document.getElementById(`tdet-${id}`);
+  if(el){ el.style.boxShadow='0 0 0 3px '+el.style.borderColor; setTimeout(()=>el.style.boxShadow='',1500); }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PAGE 4 — COURSE INDEX
+// ═══════════════════════════════════════════════════════════════════════════
+function buildIndex() { filterIndex(); }
+
+function filterIndex() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const ph = document.getElementById('filter-phase').value;
+  const sm = document.getElementById('filter-sem').value;
+  const tp = document.getElementById('filter-type').value;
+
+  let filtered = COURSES.filter(c=>{
+    if(q && !c.code.toLowerCase().includes(q) && !c.name.toLowerCase().includes(q)) return false;
+    if(ph && c.phase!==ph) return false;
+    if(sm && c.sem!==parseInt(sm)) return false;
+    if(tp && c.type!==tp) return false;
+    return true;
+  });
+
+  filtered.sort((a,b)=>{
+    let av=a[indexSort.key], bv=b[indexSort.key];
+    if(typeof av==='string') av=av.toLowerCase(), bv=bv.toLowerCase();
+    return (av<bv?-1:av>bv?1:0)*indexSort.dir;
+  });
+
+  const tbody = document.getElementById('index-tbody');
+  tbody.innerHTML = '';
+  filtered.forEach((c,i)=>{
+    const bg = c.type==='GER'?'#EBF5FB':(i%2===0?'#fff':'#f9fafb');
+    const tr = document.createElement('tr');
+    tr.className = 'course-row border-b border-gray-100';
+    tr.style.background = bg;
+    tr.onclick = () => toggleDetail(c.code, tr, c);
+    tr.innerHTML = `
+      <td class="px-3 py-1.5 font-mono text-xs font-semibold text-blue-800">${c.code}</td>
+      <td class="px-3 py-1.5 text-xs">${c.name}</td>
+      <td class="px-2 py-1.5 text-center text-xs hide-mobile">${c.sem}</td>
+      <td class="px-2 py-1.5 text-center hide-mobile"><span class="text-xs font-semibold" style="color:${phaseColor(c.phase)}">Phase ${c.phase}</span></td>
+      <td class="px-2 py-1.5 text-center text-xs font-bold">${c.ch}</td>
+      <td class="px-2 py-1.5 text-center">${typeBadge(c.type)}</td>`;
+    tbody.appendChild(tr);
+
+    // Detail row
+    const det = document.createElement('tr');
+    det.id = `det-${c.code.replace(/[^a-zA-Z0-9]/g,'-')}`;
+    det.className = 'detail-panel';
+    det.innerHTML = `<td colspan="6" class="px-4 py-3" style="background:#F0F8FF">
+      <div class="grid sm:grid-cols-3 gap-3 text-xs">
+        <div><span class="font-bold text-gray-600">Credit Hours:</span> ${c.chDisplay}</div>
+        <div><span class="font-bold text-gray-600">Year:</span> ${c.year}</div>
+        <div><span class="font-bold text-gray-600">Phase:</span> ${c.phase}</div>
+        <div class="sm:col-span-2"><span class="font-bold text-gray-600">Competency Anchor:</span> ${c.anchor}</div>
+        <div><span class="font-bold text-gray-600">Threads:</span> ${c.threads.join(', ')||'—'}</div>
+      </div>
+    </td>`;
+    tbody.appendChild(det);
+  });
+
+  document.getElementById('index-count').textContent = `${filtered.length} of ${COURSES.length} courses`;
+}
+
+function toggleDetail(code, tr, c) {
+  const id = `det-${code.replace(/[^a-zA-Z0-9]/g,'-')}`;
+  const det = document.getElementById(id);
+  if(det) det.classList.toggle('open');
+}
+
+function sortIndex(key) {
+  if(indexSort.key===key) indexSort.dir *= -1;
+  else { indexSort.key=key; indexSort.dir=1; }
+  filterIndex();
+}
+
+function toggleCalcSem(s) {
+  const wrap = document.getElementById(`calc-body-wrap-${s}`);
+  const arrow = document.getElementById(`calc-arrow-${s}`);
+  if(!wrap) return;
+  wrap.classList.toggle('hidden');
+  if(arrow) arrow.textContent = wrap.classList.contains('hidden') ? '▸' : '▾';
+}
+function calcExpandAll() {
+  for(let s=1;s<=10;s++){
+    const wrap=document.getElementById(`calc-body-wrap-${s}`);
+    const arrow=document.getElementById(`calc-arrow-${s}`);
+    if(wrap){wrap.classList.remove('hidden'); if(arrow)arrow.textContent='▾';}
+  }
+}
+function calcCollapseAll() {
+  for(let s=1;s<=10;s++){
+    const wrap=document.getElementById(`calc-body-wrap-${s}`);
+    const arrow=document.getElementById(`calc-arrow-${s}`);
+    if(wrap){wrap.classList.add('hidden'); if(arrow)arrow.textContent='▸';}
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════
+buildCalc();
+buildOverview();
+buildThreads();
+buildIndex();
+</script>
+</body>
+</html>
