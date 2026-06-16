@@ -1,0 +1,63 @@
+<svg width="680" height="430" viewBox="0 0 680 430" xmlns="http://www.w3.org/2000/svg">
+  <title>Sabeel College of Medicine — Official Logo</title>
+  <desc>Circular academic badge in blue and gold with Islamic 8-pointed star, crescent and star at centre, SABEEL and college name below</desc>
+  <defs>
+    <clipPath id="crescentClip">
+      <circle cx="340" cy="200" r="24"/>
+    </clipPath>
+  </defs>
+
+  <!-- outer dashed decorative ring -->
+  <circle cx="340" cy="200" r="118" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-dasharray="6,4" stroke-linecap="round"/>
+
+  <!-- cardinal diamond ornaments -->
+  <polygon points="340,74 344,82 340,90 336,82" fill="#C9A84C"/>
+  <polygon points="464,196 472,200 464,204 456,200" fill="#C9A84C"/>
+  <polygon points="340,310 344,318 340,326 336,318" fill="#C9A84C"/>
+  <polygon points="216,196 224,200 216,204 208,200" fill="#C9A84C"/>
+
+  <!-- main academic blue badge -->
+  <circle cx="340" cy="200" r="110" fill="#1A3A6E"/>
+
+  <!-- gold rings -->
+  <circle cx="340" cy="200" r="104" fill="none" stroke="#C9A84C" stroke-width="2"/>
+  <circle cx="340" cy="200" r="98"  fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="3,4" stroke-linecap="round"/>
+
+  <!-- 8-pointed gold star -->
+  <polygon
+    points="340,118 351.3,166.5 388.0,141.9 365.8,183.2 422,200 365.8,216.8 388.0,258.1 351.3,233.5 340,282 328.7,233.5 292.0,258.1 314.2,216.8 258,200 314.2,183.2 292.0,141.9 328.7,166.5"
+    fill="#C9A84C"/>
+
+  <!-- inner blue circle over star centre -->
+  <circle cx="340" cy="200" r="42" fill="#1A3A6E"/>
+  <circle cx="340" cy="200" r="42" fill="none" stroke="#C9A84C" stroke-width="1.2"/>
+
+  <!-- crescent moon -->
+  <circle cx="340" cy="200" r="24" fill="white"/>
+  <circle cx="328" cy="200" r="18" fill="#1A3A6E" clip-path="url(#crescentClip)"/>
+
+  <!-- small gold 5-pointed star beside crescent -->
+  <polygon
+    points="357,181 358.5,185.8 363.5,185.8 359.5,188.6 361,193.5 357,190.5 353,193.5 354.5,188.6 350.5,185.8 355.5,185.8"
+    fill="#C9A84C"/>
+
+  <!-- SABEEL name -->
+  <text x="340" y="362"
+    text-anchor="middle"
+    font-family="Cormorant Garamond, Palatino Linotype, Georgia, serif"
+    font-size="32" font-weight="600"
+    fill="#1F3864"
+    letter-spacing="10">SABEEL</text>
+
+  <!-- ornamental lines -->
+  <line x1="130" y1="375" x2="550" y2="375" stroke="#C9A84C" stroke-width="1"/>
+  <line x1="145" y1="379" x2="535" y2="379" stroke="#C9A84C" stroke-width="0.4"/>
+
+  <!-- college name -->
+  <text x="340" y="406"
+    text-anchor="middle"
+    font-family="Cormorant Garamond, Palatino Linotype, Georgia, serif"
+    font-size="17" font-weight="500"
+    fill="#1F3864"
+    letter-spacing="3.5">SABEEL COLLEGE OF MEDICINE</text>
+</svg>
