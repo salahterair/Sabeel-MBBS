@@ -61,23 +61,18 @@
 <body class="min-h-screen">
 
 <!-- HEADER -->
-<header style="background:var(--navy)" class="text-white px-4 py-3 shadow-lg">
+<header style="background:var(--navy)" class="text-white px-4 py-6 shadow-lg">
   <div class="max-w-7xl mx-auto">
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-3">
-        <img src="Sabeel_Logo.svg" alt="Sabeel logo" class="h-20 w-auto max-w-[140px] rounded-md bg-white/10 p-2" />
-        <div>
-          <div class="font-bold text-lg leading-tight">Sabeel College of Medicine</div>
-          <div class="text-xs opacity-75">MBBS Curriculum · 216 Credit Hours · 5 Years · 10 Semesters · WFME & CanMEDS Aligned</div>
-        </div>
-      </div>
-      <div class="ml-auto text-right">
-        <div class="text-2xl font-bold" id="grand-total-hdr">216</div>
-        <div class="text-xs opacity-75">Total CH</div>
+    <!-- LOGO & TITLE - CENTERED -->
+    <div class="flex flex-col items-center text-center mb-4">
+      <img src="Sabeel_Logo.svg" alt="Sabeel logo" class="h-24 w-auto rounded-md bg-white/10 p-2 mb-3" />
+      <div>
+        <div class="font-bold text-2xl leading-tight">Sabeel College of Medicine</div>
+        <div class="text-sm opacity-75 mt-1">MBBS Curriculum · 216 Credit Hours · 5 Years · 10 Semesters · WFME & CanMEDS Aligned</div>
       </div>
     </div>
     <!-- TABS -->
-    <nav class="flex gap-1 mt-3 border-t border-blue-700 pt-1">
+    <nav class="flex gap-1 border-t border-blue-700 pt-2 justify-center flex-wrap">
       <button onclick="showPage('calc')" class="nav-tab active px-3 py-1.5 text-sm" id="tab-calc">⚖️ CH Calculator</button>
       <button onclick="showPage('overview')" class="nav-tab px-3 py-1.5 text-sm" id="tab-overview">📋 Curriculum</button>
       <button onclick="showPage('threads')" class="nav-tab px-3 py-1.5 text-sm" id="tab-threads">🧵 Threads</button>
@@ -209,9 +204,9 @@
 </footer>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // DATA
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 const COURSES = [
   // SEM 1
   {code:"GER-01",name:"Scientific Language & Medical Terminology",sem:1,year:1,phase:"I",ch:3,chDisplay:"3 (3+0)",type:"GER",threads:["language"],anchor:"EPA 5 & 6"},
@@ -231,9 +226,9 @@ const COURSES = [
   {code:"SMED-I1B-02",name:"Medical Physiology I: General Physiology & Homeostasis",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
   {code:"SMED-I1B-03",name:"Biochemistry II: Metabolism & Nutrition",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
   {code:"SMED-I1B-04",name:"Foundations of Medical Ethics & Professionalism",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6, EPA 11"},
-  {code:"SMED-I1B-05",name:"Community Medicine I: Social Determinants of Health & PHC",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA1, T7·HS9, EPA 14"},
+  {code:"SMED-I1B-05",name:"Community Medicine I: Social Determinants of Health & PHC",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA1, T7·HS9, EPA 9"},
   {code:"SMED-I1B-06",name:"Early Clinical Exposure II (ECE-II)",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (0+4)",type:"ECE",threads:["ece"],anchor:"T3·PC2, EPA 1"},
-  {code:"SMED-I1B-07",name:"Foundational Clinical Skills (vital signs, basic examination, hand hygiene)",sem:2,year:1,phase:"I",ch:1,chDisplay:"1 (0+2)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC2, EPA 1"},
+  {code:"SMED-I1B-07",name:"Foundational Clinical Skills (vital signs, basic examination, hand hygiene)",sem:2,year:1,phase:"I",ch:1,chDisplay:"1 (0+2)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC4, EPA 1"},
   // SEM 3
   {code:"SMED-I2A-01",name:"Cardiovascular System Module (integrated)",sem:3,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2 & 3"},
   {code:"SMED-I2A-02",name:"Respiratory System Module (integrated)",sem:3,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
@@ -253,34 +248,34 @@ const COURSES = [
   // SEM 5
   {code:"SMED-II3A-01",name:"Musculoskeletal Medicine & Rheumatology",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
   {code:"SMED-II3A-02",name:"Dermatology & Integumentary System Module",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, EPA 2"},
-  {code:"SMED-II3A-03",name:"Microbiology & Infectious Disease I: Bacteriology & Mycology",sem:5,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC6"},
+  {code:"SMED-II3A-03",name:"Microbiology & Infectious Disease I: Bacteriology & Mycology",sem:5,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC4"},
   {code:"SMED-II3A-04",name:"Immunology",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC9"},
   {code:"SMED-II3A-05",name:"Systemic Pathology I",sem:5,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 2 & 3"},
-  {code:"SMED-II3A-06",name:"Basic Clinical Skills I: History-Taking & Physical Examination",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC2, T4·C2, EPA 1 & 2"},
+  {code:"SMED-II3A-06",name:"Basic Clinical Skills I: History-Taking & Physical Examination",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC4, EPA 3"},
   // SEM 6
   {code:"SMED-II3B-01",name:"Reproductive & Women's Health Module (integrated)",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC6"},
   {code:"SMED-II3B-02",name:"Paediatrics & Child Health Module (integrated)",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC7"},
-  {code:"SMED-II3B-03",name:"Microbiology II: Virology, Parasitology & Tropical Diseases",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T9·SA10"},
-  {code:"SMED-II3B-04",name:"Systemic Pathology II",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 3"},
+  {code:"SMED-II3B-03",name:"Microbiology II: Virology, Parasitology & Tropical Diseases",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T9·SA1"},
+  {code:"SMED-II3B-04",name:"Systemic Pathology II",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1��ME3, EPA 3"},
   {code:"SMED-II3B-05",name:"Pharmacology & Therapeutics I",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["pharmacology"],anchor:"T1·ME3, T3·PC5/6, EPA 4"},
-  {code:"SMED-II3B-06",name:"Basic Clinical Skills II: Procedures & Patient Communication",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T4·C7, T3·PC7, EPA 8 & 12"},
-  {code:"SMED-II3B-07",name:"Community Medicine II: Health Promotion, Disease Prevention & Environmental Health",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA1/3, T7·HS9, EPA 14"},
+  {code:"SMED-II3B-06",name:"Basic Clinical Skills II: Procedures & Patient Communication",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T4·C6, EPA 5 & 6"},
+  {code:"SMED-II3B-07",name:"Community Medicine II: Health Promotion, Disease Prevention & Environmental Health",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA5/6, T7·HS1"},
   // SEM 7
   {code:"SMED-II4A-01",name:"Ophthalmology & ENT Module",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC1"},
   {code:"SMED-II4A-02",name:"Psychiatry & Mental Health",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3/5, T3·PC6"},
   {code:"SMED-II4A-03",name:"Radiology & Diagnostic Imaging",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["clinical-skills"],anchor:"T3·PC4, EPA 3"},
   {code:"SMED-II4A-04",name:"Forensic Medicine & Toxicology",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6, T7·HS3"},
   {code:"SMED-II4A-05",name:"Research Methodology & Evidence-Based Medicine",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Research",threads:["research"],anchor:"T2·EBS3/8, EPA 7"},
-  {code:"SMED-II4A-06",name:"Professionalism, Advanced Ethics & Good Medical Practice",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6/8, T8·SPE8, EPA 11"},
+  {code:"SMED-II4A-06",name:"Professionalism, Advanced Ethics & Good Medical Practice",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6/8, T8·SPE8"},
   {code:"SMED-II4A-07",name:"Pharmacology & Therapeutics II",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["pharmacology"],anchor:"T3·PC5/6, EPA 4"},
-  {code:"SMED-II4A-08",name:"Rural & Community Medicine Clerkship",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clerkship",threads:["community","clinical-skills"],anchor:"T9·SA5/9, T7·HS1, EPA 9 & 14"},
+  {code:"SMED-II4A-08",name:"Rural & Community Medicine Clerkship",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clerkship",threads:["community","clinical-skills"],anchor:"T9·SA5/9, T7·HS1, EPA 9"},
   // SEM 8
   {code:"SMED-II4B-01",name:"Internal Medicine Clerkship I",sem:8,year:4,phase:"II",ch:4,chDisplay:"4 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
   {code:"SMED-II4B-02",name:"General Surgery Clerkship I",sem:8,year:4,phase:"II",ch:4,chDisplay:"4 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 1 & 12"},
   {code:"SMED-II4B-03",name:"Obstetrics & Gynaecology Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6/7, EPA 4"},
   {code:"SMED-II4B-04",name:"Paediatrics Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC7/11, EPA 4"},
   {code:"SMED-II4B-05",name:"Emergency Medicine & Acute Care",sem:8,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["clinical-skills"],anchor:"T3·PC3, EPA 10"},
-  {code:"SMED-II4B-06",name:"Family Medicine & Community Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T7·HS1/9, T9·SA6, EPA 14"},
+  {code:"SMED-II4B-06",name:"Family Medicine & Community Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T7·HS1/9, T9·SA6, EPA 9"},
   {code:"SMED-II4B-07",name:"Research Project I",sem:8,year:4,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, EPA 7"},
   // SEM 9
   {code:"SMED-III5A-01",name:"Internal Medicine Clerkship II",sem:9,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
@@ -293,7 +288,7 @@ const COURSES = [
   {code:"SMED-III5B-02",name:"General Surgery Clerkship III",sem:10,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 12"},
   {code:"SMED-III5B-03",name:"Obstetrics & Gynaecology Clerkship III",sem:10,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6, EPA 4 & 11"},
   {code:"SMED-III5B-04",name:"Paediatrics Clerkship III",sem:10,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC9/11, EPA 14"},
-  {code:"SMED-III5B-05",name:"Family & Community Medicine Clerkship II",sem:10,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T9·SA5/9, T7·HS1, EPA 13 & 14"},
+  {code:"SMED-III5B-05",name:"Family & Community Medicine Clerkship II",sem:10,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T9·SA5/9, T7·HS1, EPA 9"},
   {code:"SMED-III5B-06",name:"Research Project II & Portfolio Completion",sem:10,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, T8·SPE9"},
 ];
 
@@ -320,18 +315,18 @@ const THREADS = [
   {id:"informatics",    label:"Health Informatics & AI",color:"#1A5276",desc:"Digital medicine, AI in healthcare, health informatics — preparing students for the modern clinical environment."},
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // STATE
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 let editableCH = {};
 COURSES.forEach(c => { editableCH[c.code] = c.ch; });
 
 let indexSort = { key: 'sem', dir: 1 };
 let expandedSems = {};
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // HELPERS
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 function typeBadge(type) {
   const map = {
     "GER":"badge-ger","System Module":"badge-module","Clerkship":"badge-clerkship",
@@ -351,9 +346,9 @@ function semTotal(s) { return getSemCourses(s).reduce((a,c)=>a+getCourseCH(c.cod
 function phaseTotal(sems) { return sems.reduce((a,s)=>a+semTotal(s),0); }
 function grandTotal() { return COURSES.reduce((a,c)=>a+getCourseCH(c.code),0); }
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // PAGE NAVIGATION
-// ═══════════════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════���═════════════════[...]
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
@@ -361,9 +356,9 @@ function showPage(id) {
   document.getElementById('tab-'+id).classList.add('active');
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // PAGE 1 — CALCULATOR
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 function buildCalc() {
   const container = document.getElementById('calc-semesters');
   container.innerHTML = '';
@@ -459,9 +454,9 @@ function exportJSON() {
   a.download='sabeel_curriculum_data.json'; a.click();
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // PAGE 2 — CURRICULUM OVERVIEW
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 function buildOverview() {
   const container = document.getElementById('overview-semesters');
   container.innerHTML = '';
@@ -506,9 +501,9 @@ function toggleSem(s) {
 function expandAll() { for(let s=1;s<=10;s++) { document.getElementById(`ov-body-${s}`)?.classList.remove('hidden'); expandedSems[s]=true; } }
 function collapseAll() { for(let s=1;s<=10;s++) { document.getElementById(`ov-body-${s}`)?.classList.add('hidden'); expandedSems[s]=false; } }
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // PAGE 3 — THREADS
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 function buildThreads() {
   const grid = document.getElementById('threads-grid');
   const details = document.getElementById('thread-details');
@@ -580,9 +575,9 @@ function showThreadDetail(id) {
   if(el){ el.style.boxShadow='0 0 0 3px '+el.style.borderColor; setTimeout(()=>el.style.boxShadow='',1500); }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // PAGE 4 — COURSE INDEX
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 function buildIndex() { filterIndex(); }
 
 function filterIndex() {
@@ -675,9 +670,9 @@ function calcCollapseAll() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // INIT
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 buildCalc();
 buildOverview();
 buildThreads();
