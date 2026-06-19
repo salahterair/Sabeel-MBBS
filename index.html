@@ -60,22 +60,26 @@
 </head>
 <body class="min-h-screen">
 
+<!-- LOGO BAR -->
+<div style="background:#ffffff;text-align:center;padding:12px 0;border-bottom:1px solid #e2e8f0;">
+  <img src="Sabeel_Logo.svg" alt="Sabeel College of Medicine circular blue and gold seal with a crescent moon and star, eight-pointed star, and the word SABEEL above the text SABEEL COLLEGE OF MEDICINE" style="height:96px;display:inline-block;" onerror="this.style.display='none'">
+</div>
+
 <!-- HEADER -->
-<header style="background:var(--navy)" class="text-white px-4 py-6 shadow-lg">
+<header style="background:var(--navy)" class="text-white px-4 py-3 shadow-lg">
   <div class="max-w-7xl mx-auto">
-    <div class="flex flex-col items-center text-center gap-3">
-      <img src="Sabeel_Logo.svg" alt="Sabeel logo" class="h-20 w-auto max-w-[140px] rounded-md bg-white/10 p-2" />
+    <div class="flex items-center gap-3">
       <div>
-        <div class="font-bold text-xl sm:text-2xl leading-tight">Sabeel College of Medicine</div>
-        <div class="text-xs opacity-75">MBBS Curriculum · 216 Credit Hours · 5 Years · 10 Semesters · WFME & CanMEDS Aligned</div>
+        <div class="font-bold text-lg leading-tight">Sabeel College of Medicine</div>
+        <div class="text-xs opacity-75">MBBS Curriculum · 215 Credit Hours · 5 Years · 10 Semesters · WFME & CanMEDS Aligned</div>
       </div>
-      <div>
-        <div class="text-3xl sm:text-4xl font-bold" id="grand-total-hdr">216</div>
+      <div class="ml-auto text-right">
+        <div class="text-2xl font-bold" id="grand-total-hdr">215</div>
         <div class="text-xs opacity-75">Total CH</div>
       </div>
     </div>
     <!-- TABS -->
-    <nav class="flex flex-wrap justify-center gap-1 mt-4 border-t border-blue-700 pt-3">
+    <nav class="flex gap-1 mt-3 border-t border-blue-700 pt-1">
       <button onclick="showPage('calc')" class="nav-tab active px-3 py-1.5 text-sm" id="tab-calc">⚖️ CH Calculator</button>
       <button onclick="showPage('overview')" class="nav-tab px-3 py-1.5 text-sm" id="tab-overview">📋 Curriculum</button>
       <button onclick="showPage('threads')" class="nav-tab px-3 py-1.5 text-sm" id="tab-threads">🧵 Threads</button>
@@ -93,25 +97,25 @@
   <div class="grid grid-cols-3 gap-3 mb-4">
     <div class="rounded-xl p-3 text-center shadow" style="background:var(--phase1)">
       <div class="text-xs font-semibold text-blue-900">Phase I (Sems 1–4)</div>
-      <div class="text-2xl font-bold text-blue-900" id="phase1-total">86</div>
-      <div class="text-xs text-blue-700">Target: 86 CH</div>
+      <div class="text-2xl font-bold text-blue-900" id="phase1-total">83</div>
+      <div class="text-xs text-blue-700">Target: 83 CH</div>
     </div>
     <div class="rounded-xl p-3 text-center shadow" style="background:var(--phase2)">
-      <div class="text-xs font-semibold text-green-900">Phase II (Sems 5–8)</div>
-      <div class="text-2xl font-bold text-green-900" id="phase2-total">88</div>
-      <div class="text-xs text-green-700">Target: 88 CH</div>
+      <div class="text-xs font-semibold text-green-900">Phase II (Sems 5–7)</div>
+      <div class="text-2xl font-bold text-green-900" id="phase2-total">67</div>
+      <div class="text-xs text-green-700">Target: 67 CH</div>
     </div>
     <div class="rounded-xl p-3 text-center shadow" style="background:var(--phase3)">
-      <div class="text-xs font-semibold text-orange-900">Phase III (Sems 9–10)</div>
-      <div class="text-2xl font-bold text-orange-900" id="phase3-total">42</div>
-      <div class="text-xs text-orange-700">Target: 42 CH</div>
+      <div class="text-xs font-semibold text-orange-900">Phase III (Sems 8–10)</div>
+      <div class="text-2xl font-bold text-orange-900" id="phase3-total">55</div>
+      <div class="text-xs text-orange-700">Target: 65 CH</div>
     </div>
   </div>
 
   <div class="bg-white rounded-xl shadow p-3 mb-3 flex flex-wrap gap-3 items-center">
     <div class="text-sm font-semibold text-gray-600">Programme Total:</div>
-    <div class="text-2xl font-bold" id="grand-total-calc" style="color:var(--navy)">216</div>
-    <div class="text-sm" id="grand-status" class="ok">✅ On target (216 CH)</div>
+    <div class="text-2xl font-bold" id="grand-total-calc" style="color:var(--navy)">215</div>
+    <div class="text-sm" id="grand-status" class="ok">✅ On target (215 CH)</div>
     <button onclick="calcExpandAll()" class="ml-auto text-xs px-3 py-1.5 rounded-lg text-white font-semibold" style="background:var(--blue)">↕ Expand All</button>
     <button onclick="calcCollapseAll()" class="text-xs px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 font-semibold">↕ Collapse All</button>
     <button onclick="resetCH()" class="text-xs px-3 py-1.5 rounded-lg border border-gray-300 text-gray-600 font-semibold">↩ Reset</button>
@@ -203,7 +207,7 @@
 </main>
 
 <footer class="text-center text-xs text-gray-400 py-4 mt-6 border-t border-gray-200">
-  Sabeel College of Medicine, Shendi &nbsp;·&nbsp; WFME 2020 &amp; CanMEDS Framework Aligned
+  Designed &amp; Developed by Dr. Salaheldin Terair &nbsp;·&nbsp; Sabeel College of Medicine, Shendi &nbsp;·&nbsp; WFME 2020 &amp; CanMEDS Framework Aligned
 </footer>
 
 <script>
@@ -211,9 +215,8 @@
 // DATA
 // ═══════════════════════════════════════════════════════════════════════════
 const COURSES = [
-  // SEM 1
-  {code:"GER-01",name:"Scientific Language & Medical Terminology",sem:1,year:1,phase:"I",ch:3,chDisplay:"3 (3+0)",type:"GER",threads:["language"],anchor:"EPA 5 & 6"},
-  {code:"GER-02",name:"Health Informatics, AI & Digital Medicine",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"GER",threads:["informatics"],anchor:"T2·EBS4, T7·HS7"},
+  // SEM 1 — 18 CH
+  {code:"GER-01",name:"Scientific Language & Medical Terminology",sem:1,year:1,phase:"I",ch:3,chDisplay:"3 (3+0)",type:"GER",threads:["language"],anchor:"T4·C1, EPA 5 & 6"},
   {code:"GER-03",name:"Islamic Studies",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"GER",threads:["professionalism"],anchor:"T6·P1, T9·SA7"},
   {code:"SMED-I1A-01",name:"Introduction to Medicine & Professional Identity",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P13, T8·SPE1"},
   {code:"SMED-I1A-02",name:"Cell Biology, Genetics & Molecular Biology",sem:1,year:1,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
@@ -221,7 +224,7 @@ const COURSES = [
   {code:"SMED-I1A-04",name:"Biochemistry I: Biomolecules & Enzymology",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
   {code:"SMED-I1A-05",name:"General Histology",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
   {code:"SMED-I1A-06",name:"General Embryology",sem:1,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
-  // SEM 2
+  // SEM 2 — 23 CH (SMED-I1B-07 merged into ECE-II; ECE-II upgraded to 3 CH)
   {code:"GER-04",name:"Medical Communication & Academic Writing",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (3+0)",type:"GER",threads:["language"],anchor:"T4·C6, EPA 5 & 6"},
   {code:"GER-05",name:"Sudan Health System & Healthcare Policy",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"GER",threads:["community","informatics"],anchor:"T7·HS1/9, T9·SA1"},
   {code:"GER-06",name:"Sudanese History, Culture & Heritage",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"GER",threads:["professionalism"],anchor:"T6·P1, T9·SA7"},
@@ -230,76 +233,82 @@ const COURSES = [
   {code:"SMED-I1B-03",name:"Biochemistry II: Metabolism & Nutrition",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
   {code:"SMED-I1B-04",name:"Foundations of Medical Ethics & Professionalism",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6, EPA 11"},
   {code:"SMED-I1B-05",name:"Community Medicine I: Social Determinants of Health & PHC",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA1, T7·HS9, EPA 14"},
-  {code:"SMED-I1B-06",name:"Early Clinical Exposure II (ECE-II)",sem:2,year:1,phase:"I",ch:2,chDisplay:"2 (0+4)",type:"ECE",threads:["ece"],anchor:"T3·PC2, EPA 1"},
-  {code:"SMED-I1B-07",name:"Foundational Clinical Skills (vital signs, basic examination, hand hygiene)",sem:2,year:1,phase:"I",ch:1,chDisplay:"1 (0+2)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC2, EPA 1"},
-  // SEM 3
-  {code:"SMED-I2A-01",name:"Cardiovascular System Module (integrated)",sem:3,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2 & 3"},
-  {code:"SMED-I2A-02",name:"Respiratory System Module (integrated)",sem:3,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
-  {code:"SMED-I2A-03",name:"Haematology & Blood Module",sem:3,year:2,phase:"I",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3"},
-  {code:"SMED-I2A-05",name:"Behavioural & Social Sciences in Medicine",sem:3,year:2,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"Medical",threads:["professionalism"],anchor:"T1·ME5, T4·C8, T9·SA1"},
-  {code:"SMED-I2A-07",name:"Anatomy of the Limbs (upper & lower limb, brachial & lumbar plexuses, surface anatomy)",sem:3,year:2,phase:"I",ch:3,chDisplay:"3 (1+4)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
-  {code:"SMED-I2A-08",name:"Head & Neck Anatomy (skull, neck spaces, thyroid, cranial nerves III–XII)",sem:3,year:2,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
-  // SEM 4
-  {code:"SMED-I2B-01",name:"Gastrointestinal & Hepatobiliary System Module (integrated)",sem:4,year:2,phase:"I",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
+  {code:"SMED-I1B-06",name:"Early Clinical Exposure II (ECE-II)",sem:2,year:1,phase:"I",ch:3,chDisplay:"3 (0+6)",type:"ECE",threads:["ece"],anchor:"T3·PC2, EPA 1"},
+  // SEM 3 — 20 CH (codes renumbered I2A-04 to -07; Geriatrics added as I2A-07)
+  {code:"SMED-I2A-01",name:"Cardiovascular System Module (integrated)",sem:3,year:2,phase:"I",ch:4,chDisplay:"4 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2 & 3"},
+  {code:"SMED-I2A-02",name:"Respiratory System Module (integrated)",sem:3,year:2,phase:"I",ch:4,chDisplay:"4 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2 & 3"},
+  {code:"SMED-I2A-03",name:"Haematology & Blood Module",sem:3,year:2,phase:"I",ch:3,chDisplay:"3 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3"},
+  {code:"SMED-I2A-04",name:"Behavioural & Social Sciences in Medicine",sem:3,year:2,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"Medical",threads:["professionalism"],anchor:"T1·ME5, T4·C8, T9·SA1"},
+  {code:"SMED-I2A-05",name:"Anatomy of the Limbs (upper & lower limb, brachial & lumbar plexuses, surface anatomy)",sem:3,year:2,phase:"I",ch:3,chDisplay:"3 (1+4)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I2A-06",name:"Head & Neck Anatomy (skull, neck spaces, thyroid, cranial nerves III–XII)",sem:3,year:2,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2"},
+  {code:"SMED-I2A-07",name:"Introduction to Geriatrics & Healthy Ageing",sem:3,year:2,phase:"I",ch:2,chDisplay:"2 (2+0)",type:"Medical",threads:["community"],anchor:"T1·ME5, T9·SA1"},
+  // SEM 4 — 22 CH (ECE-IV expanded; Palliative Care intro added; Research Methods moved to Sem 6)
+  {code:"SMED-I2B-01",name:"Gastrointestinal & Hepatobiliary System Module (integrated)",sem:4,year:2,phase:"I",ch:4,chDisplay:"4 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
   {code:"SMED-I2B-02",name:"Renal & Urinary System Module (integrated)",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3"},
-  {code:"SMED-I2B-03",name:"Nervous System Module I (integrated)",sem:4,year:2,phase:"I",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
+  {code:"SMED-I2B-03",name:"Nervous System Module I (integrated)",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
   {code:"SMED-I2B-04",name:"Endocrinology Module (integrated)",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3"},
   {code:"SMED-I2B-05",name:"General Pathology",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3"},
   {code:"SMED-I2B-06",name:"Epidemiology & Medical Statistics",sem:4,year:2,phase:"I",ch:2,chDisplay:"2 (1+2)",type:"Research",threads:["research"],anchor:"T2·EBS5, T1·ME4, T9·SA2"},
-  {code:"SMED-I2B-07",name:"Early Clinical Exposure IV: Community Health Visit",sem:4,year:2,phase:"I",ch:1,chDisplay:"1 (0+2)",type:"ECE",threads:["ece","community"],anchor:"T9·SA5, T7·HS1, EPA 9"},
-  {code:"SMED-I2B-08",name:"Research Methods & Biostatistics I",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (2+2)",type:"Research",threads:["research"],anchor:"T2·EBS3/8, EPA 7"},
-  // SEM 5
-  {code:"SMED-II3A-01",name:"Musculoskeletal Medicine & Rheumatology",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["systems"],anchor:"T1·ME2/3, EPA 2"},
-  {code:"SMED-II3A-02",name:"Dermatology & Integumentary System Module",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, EPA 2"},
-  {code:"SMED-II3A-03",name:"Microbiology & Infectious Disease I: Bacteriology & Mycology",sem:5,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC6"},
+  {code:"SMED-I2B-07",name:"Early Clinical Exposure IV: Community Health Visit",sem:4,year:2,phase:"I",ch:3,chDisplay:"3 (0+6)",type:"ECE",threads:["ece","community"],anchor:"T9·SA5, T7·HS1, EPA 9"},
+  {code:"SMED-I2B-08",name:"Introduction to Palliative Care & End-of-Life Communication",sem:4,year:2,phase:"I",ch:1,chDisplay:"1 (1+0)",type:"Medical",threads:["professionalism"],anchor:"T6·P6, T4·C2, T3·PC8"},
+  // SEM 5 — 23 CH (MSK Module expanded to 5 CH; Patient Safety added)
+  {code:"GER-02",name:"Health Informatics, AI & Digital Medicine",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"GER",threads:["informatics"],anchor:"T2·EBS4, T7·HS7"},
+  {code:"SMED-II3A-01",name:"MSK System Module (pathology + rheumatology + orthopedics + pharmacology)",sem:5,year:3,phase:"II",ch:5,chDisplay:"5 (3+4)",type:"System Module",threads:["systems"],anchor:"T1·ME2/3, EPA 2, 4"},
+  {code:"SMED-II3A-02",name:"Dermatology & Integumentary System Module",sem:5,year:3,phase:"II",ch:2,chDisplay:"2 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, EPA 2"},
+  {code:"SMED-II3A-03",name:"Microbiology I: Bacteriology & Mycology",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC6"},
   {code:"SMED-II3A-04",name:"Immunology",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T3·PC9"},
-  {code:"SMED-II3A-05",name:"Systemic Pathology I",sem:5,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 2 & 3"},
+  {code:"SMED-II3A-05",name:"Systemic Pathology I (CVS, respiratory, haematology)",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 2 & 3"},
   {code:"SMED-II3A-06",name:"Basic Clinical Skills I: History-Taking & Physical Examination",sem:5,year:3,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T3·PC2, T4·C2, EPA 1 & 2"},
-  // SEM 6
-  {code:"SMED-II3B-01",name:"Reproductive & Women's Health Module (integrated)",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC6"},
-  {code:"SMED-II3B-02",name:"Paediatrics & Child Health Module (integrated)",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC7"},
+  {code:"SMED-II3A-09",name:"Introduction to Patient Safety & Quality Improvement",sem:5,year:3,phase:"II",ch:1,chDisplay:"1 (1+0)",type:"Medical",threads:["professionalism"],anchor:"T7·HS3, T9·SA2, EPA 13"},
+  // SEM 6 — 24 CH (Research Methods I added; Health Economics added)
+  {code:"SMED-II3B-01",name:"Reproductive & Women's Health Module (integrated)",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC6"},
+  {code:"SMED-II3B-02",name:"Paediatrics & Child Health Module (integrated)",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (3+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC7"},
   {code:"SMED-II3B-03",name:"Microbiology II: Virology, Parasitology & Tropical Diseases",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME2, T9·SA10"},
-  {code:"SMED-II3B-04",name:"Systemic Pathology II",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 3"},
-  {code:"SMED-II3B-05",name:"Pharmacology & Therapeutics I",sem:6,year:3,phase:"II",ch:4,chDisplay:"4 (3+2)",type:"Medical",threads:["pharmacology"],anchor:"T1·ME3, T3·PC5/6, EPA 4"},
-  {code:"SMED-II3B-06",name:"Basic Clinical Skills II: Procedures & Patient Communication",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T4·C7, T3·PC7, EPA 8 & 12"},
+  {code:"SMED-II3B-04",name:"Systemic Pathology II (GI, renal, CNS, endocrine)",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (3+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3, EPA 3"},
+  {code:"SMED-II3B-05",name:"Pharmacology & Therapeutics I (CVS, respiratory, CNS, antimicrobials)",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (3+2)",type:"Medical",threads:["pharmacology"],anchor:"T1·ME3, T3·PC5/6, EPA 4"},
+  {code:"SMED-II3B-06",name:"Basic Clinical Skills II: Clinical Procedures & Communication",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Clinical Skills",threads:["clinical-skills"],anchor:"T4·C7, T3·PC7, EPA 8 & 12"},
   {code:"SMED-II3B-07",name:"Community Medicine II: Health Promotion, Disease Prevention & Environmental Health",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["community"],anchor:"T9·SA1/3, T7·HS9, EPA 14"},
-  // SEM 7
+  {code:"SMED-II3B-08",name:"Research Methods & Evidence-Based Medicine I",sem:6,year:3,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Research",threads:["research"],anchor:"T2·EBS3/8, EPA 7"},
+  {code:"SMED-II3B-09",name:"Health Economics & Resource Stewardship",sem:6,year:3,phase:"II",ch:2,chDisplay:"2 (2+0)",type:"Medical",threads:["community"],anchor:"T7·HS3/9, T9·SA2"},
+  // SEM 7 — 20 CH (Pharmacology II reduced; end of Phase II)
   {code:"SMED-II4A-01",name:"Ophthalmology & ENT Module",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"System Module",threads:["systems"],anchor:"T1·ME3, T3·PC1"},
   {code:"SMED-II4A-02",name:"Psychiatry & Mental Health",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["basic-science"],anchor:"T1·ME3/5, T3·PC6"},
   {code:"SMED-II4A-03",name:"Radiology & Diagnostic Imaging",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["clinical-skills"],anchor:"T3·PC4, EPA 3"},
   {code:"SMED-II4A-04",name:"Forensic Medicine & Toxicology",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6, T7·HS3"},
-  {code:"SMED-II4A-05",name:"Research Methodology & Evidence-Based Medicine",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Research",threads:["research"],anchor:"T2·EBS3/8, EPA 7"},
+  {code:"SMED-II4A-05",name:"Research Methodology & Evidence-Based Medicine II",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Research",threads:["research"],anchor:"T2·EBS3/8, EPA 7"},
   {code:"SMED-II4A-06",name:"Professionalism, Advanced Ethics & Good Medical Practice",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["professionalism"],anchor:"T6·P6/8, T8·SPE8, EPA 11"},
-  {code:"SMED-II4A-07",name:"Pharmacology & Therapeutics II",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (2+2)",type:"Medical",threads:["pharmacology"],anchor:"T3·PC5/6, EPA 4"},
+  {code:"SMED-II4A-07",name:"Pharmacology & Therapeutics II (endocrine, GI, reproductive, dermatology)",sem:7,year:4,phase:"II",ch:2,chDisplay:"2 (2+2)",type:"Medical",threads:["pharmacology"],anchor:"T3·PC5/6, EPA 4"},
   {code:"SMED-II4A-08",name:"Rural & Community Medicine Clerkship",sem:7,year:4,phase:"II",ch:3,chDisplay:"3 (0+6)",type:"Clerkship",threads:["community","clinical-skills"],anchor:"T9·SA5/9, T7·HS1, EPA 9 & 14"},
-  // SEM 8
-  {code:"SMED-II4B-01",name:"Internal Medicine Clerkship I",sem:8,year:4,phase:"II",ch:4,chDisplay:"4 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
-  {code:"SMED-II4B-02",name:"General Surgery Clerkship I",sem:8,year:4,phase:"II",ch:4,chDisplay:"4 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 1 & 12"},
-  {code:"SMED-II4B-03",name:"Obstetrics & Gynaecology Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6/7, EPA 4"},
-  {code:"SMED-II4B-04",name:"Paediatrics Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC7/11, EPA 4"},
-  {code:"SMED-II4B-05",name:"Emergency Medicine & Acute Care",sem:8,year:4,phase:"II",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["clinical-skills"],anchor:"T3·PC3, EPA 10"},
-  {code:"SMED-II4B-06",name:"Family Medicine & Community Clerkship I",sem:8,year:4,phase:"II",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T7·HS1/9, T9·SA6, EPA 14"},
-  {code:"SMED-II4B-07",name:"Research Project I",sem:8,year:4,phase:"II",ch:2,chDisplay:"2 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, EPA 7"},
-  // SEM 9
+  // SEM 8 — 19 CH (Phase III starts here; Progress Test II)
+  {code:"SMED-II4B-01",name:"Internal Medicine Clerkship I",sem:8,year:4,phase:"III",ch:4,chDisplay:"4 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"T1·ME3, T3·PC1-8, EPA 1-6"},
+  {code:"SMED-II4B-02",name:"General Surgery Clerkship I",sem:8,year:4,phase:"III",ch:3,chDisplay:"3 (1+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 1 & 12"},
+  {code:"SMED-II4B-03",name:"Obstetrics & Gynaecology Clerkship I",sem:8,year:4,phase:"III",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6/7, EPA 4"},
+  {code:"SMED-II4B-04",name:"Paediatrics Clerkship I",sem:8,year:4,phase:"III",ch:3,chDisplay:"3 (1+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC7/11, EPA 4"},
+  {code:"SMED-II4B-05",name:"Emergency Medicine & Acute Care",sem:8,year:4,phase:"III",ch:2,chDisplay:"2 (1+2)",type:"Medical",threads:["clinical-skills"],anchor:"T3·PC3, EPA 10"},
+  {code:"SMED-II4B-06",name:"Family Medicine & Community Clerkship I",sem:8,year:4,phase:"III",ch:2,chDisplay:"2 (1+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T7·HS1/9, T9·SA6, EPA 14"},
+  {code:"SMED-II4B-07",name:"Research Project I",sem:8,year:4,phase:"III",ch:1,chDisplay:"1 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, EPA 7"},
+  {code:"SMED-II4B-08",name:"Introduction to Telemedicine & Digital Health",sem:8,year:4,phase:"III",ch:1,chDisplay:"1 (1+0)",type:"Medical",threads:["informatics"],anchor:"T2·EBS4, T7·HS7"},
+  // SEM 9 — 23 CH
   {code:"SMED-III5A-01",name:"Internal Medicine Clerkship II",sem:9,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
   {code:"SMED-III5A-02",name:"General Surgery Clerkship II",sem:9,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 12"},
   {code:"SMED-III5A-03",name:"Obstetrics & Gynaecology Clerkship II",sem:9,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6, EPA 4 & 11"},
   {code:"SMED-III5A-04",name:"Paediatrics Clerkship II",sem:9,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC9/11, EPA 14"},
   {code:"SMED-III5A-05",name:"Elective Clerkship I (student-selected specialty)",sem:9,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Clerkship",threads:["clerkship"],anchor:"T8·SPE9/10"},
-  // SEM 10
+  {code:"SMED-III5A-06",name:"Palliative Medicine & End-of-Life Care (Clinical)",sem:9,year:5,phase:"III",ch:3,chDisplay:"3 (1+2)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC8, T6·P1, T4·C2"},
+  // SEM 10 — 23 CH
   {code:"SMED-III5B-01",name:"Internal Medicine Clerkship III",sem:10,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"Full EPA bundle"},
   {code:"SMED-III5B-02",name:"General Surgery Clerkship III",sem:10,year:5,phase:"III",ch:5,chDisplay:"5 (2+6)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC1/3, EPA 12"},
   {code:"SMED-III5B-03",name:"Obstetrics & Gynaecology Clerkship III",sem:10,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC6, EPA 4 & 11"},
   {code:"SMED-III5B-04",name:"Paediatrics Clerkship III",sem:10,year:5,phase:"III",ch:4,chDisplay:"4 (2+4)",type:"Clerkship",threads:["clerkship"],anchor:"T3·PC9/11, EPA 14"},
   {code:"SMED-III5B-05",name:"Family & Community Medicine Clerkship II",sem:10,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Clerkship",threads:["community","clerkship"],anchor:"T9·SA5/9, T7·HS1, EPA 13 & 14"},
-  {code:"SMED-III5B-06",name:"Research Project II & Portfolio Completion",sem:10,year:5,phase:"III",ch:2,chDisplay:"2 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, T8·SPE9"},
+  {code:"SMED-III5B-06",name:"Research Project II & Portfolio Completion",sem:10,year:5,phase:"III",ch:3,chDisplay:"3 (0+4)",type:"Research",threads:["research"],anchor:"T2·EBS8, T8·SPE9"},
 ];
 
-const SEM_TARGETS = {1:18,2:23,3:21,4:24,5:23,6:23,7:21,8:21,9:20,10:22};
+const SEM_TARGETS = {1:18,2:23,3:20,4:22,5:23,6:24,7:20,8:19,9:23,10:23};
 const SEM_NOTES = {
   4:"▶ Progress Test I (end of Phase I)",
   7:"★ Research Supervision I — mandatory non-credit milestone",
-  8:"▶ Progress Test II (end of Phase II) · ★ Research Supervision II — mandatory non-credit milestone",
+  8:"▶ Progress Test II (Semester 8 · Phase III) · ★ Phase III begins — Clinical Clerkships & Graduation · ★ Research Supervision II — mandatory non-credit milestone",
   9:"★ Research Supervision III — mandatory non-credit milestone",
   10:"▶ Progress Test III / Exit Comprehensive Examination"
 };
@@ -420,11 +429,11 @@ function updateTotals() {
   document.getElementById('grand-total-hdr').textContent = gt;
   document.getElementById('grand-total-calc').textContent = gt;
   const status = document.getElementById('grand-status');
-  if(gt===216){ status.className='ok'; status.textContent='✅ On target (216 CH)'; }
-  else if(gt<216){ status.className='warn'; status.textContent=`⚠️ ${216-gt} CH below target`; }
-  else { status.className='warn'; status.textContent=`⚠️ ${gt-216} CH above target`; }
+  if(gt===215){ status.className='ok'; status.textContent='✅ On target (215 CH)'; }
+  else if(gt<215){ status.className='warn'; status.textContent=`⚠️ ${215-gt} CH below target`; }
+  else { status.className='warn'; status.textContent=`⚠️ ${gt-215} CH above target`; }
 
-  const p1=phaseTotal([1,2,3,4]), p2=phaseTotal([5,6,7,8]), p3=phaseTotal([9,10]);
+  const p1=phaseTotal([1,2,3,4]), p2=phaseTotal([5,6,7]), p3=phaseTotal([8,9,10]);
   document.getElementById('phase1-total').textContent=p1;
   document.getElementById('phase2-total').textContent=p2;
   document.getElementById('phase3-total').textContent=p3;
@@ -542,7 +551,7 @@ function buildThreads() {
   const phaseSpans = [{label:'Phase I · Year 1',cols:2,color:'var(--phase1h)'},
     {label:'Phase I · Year 2',cols:2,color:'var(--phase1h)'},
     {label:'Phase II · Year 3',cols:2,color:'var(--phase2h)'},
-    {label:'Phase II · Year 4',cols:2,color:'var(--phase2h)'},
+    {label:'Phase II/III · Year 4',cols:2,color:'var(--phase2h)'},
     {label:'Phase III · Year 5',cols:2,color:'var(--phase3h)'}];
   phaseSpans.forEach(p=>{
     html+=`<td colspan="${p.cols}" class="sem-col px-1 py-1 text-center text-white text-xs font-bold rounded" style="background:${p.color}">${p.label}</td>`;
